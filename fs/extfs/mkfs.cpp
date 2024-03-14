@@ -24,6 +24,7 @@ limitations under the License.
 #include <photon/common/uuid4.h>
 #include <string>
 #include <fcntl.h>
+#include <sys/stat.h>
 
 constexpr char DEFAULT_UUID[] = "bdf7bb2e-c231-43ce-87c2-photonextdev";
 

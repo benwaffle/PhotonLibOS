@@ -25,6 +25,7 @@ limitations under the License.
 #include <unistd.h>
 #include <vector>
 #include <sys/sysmacros.h>
+#include <sys/stat.h>
 #include <sys/statvfs.h>
 #include <sys/vfs.h>
 #include <photon/photon.h>
