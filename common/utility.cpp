@@ -15,7 +15,6 @@ limitations under the License.
 */
 
 #include <sys/utsname.h>
-#include <execinfo.h>
 #include "utility.h"
 #include "estring.h"
 #include "alog.h"
@@ -59,6 +58,7 @@ int kernel_version_compare(std::string_view dst, int& result) {
 }
 
 void print_stacktrace() {
+    /*
     int size = 16;
     void * array[16];
     int stack_num = backtrace(array, size);
@@ -68,5 +68,6 @@ void print_stacktrace() {
         LOG_DEBUG(stacktrace[i]);
     }
     free(stacktrace);
+    */
 }
 
