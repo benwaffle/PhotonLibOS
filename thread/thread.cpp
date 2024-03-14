@@ -88,7 +88,7 @@ inline int posix_memalign(void** memptr, size_t alignment, size_t size) {
                            #name": "
 #endif
 
-static constexpr size_t PAGE_SIZE = 1 << 12;
+static constexpr size_t STACK_PAGE_SIZE = 1 << 12;
 
 namespace photon
 {
@@ -130,7 +130,7 @@ namespace photon
 
     void* default_photon_thread_stack_alloc(void*, size_t stack_size) {
         char* ptr = nullptr;
-        int err = posix_memalign((void**)&ptr, PAGE_SIZE, stack_size);
+        int err = posix_memalign((void**)&ptr, STACK_PAGE_SIZE, stack_size);
         if (unlikely(err))
             LOG_ERROR_RETURN(err, nullptr, "Failed to allocate photon stack! ",
                              ERRNO(err));
@@ -928,7 +928,7 @@ R"(
         if (unlikely(!rq.current))
             LOG_ERROR_RETURN(ENOSYS, nullptr, "Photon not initialized in this vCPU (OS thread)");
         size_t randomizer = (rand() % 32) * (1024 + 8);
-        stack_size = align_up(randomizer + stack_size + sizeof(thread), PAGE_SIZE);
+        stack_size = align_up(randomizer + stack_size + sizeof(thread), STACK_PAGE_SIZE);
         char* ptr = (char*)photon_thread_alloc(stack_size);
         auto p = ptr + stack_size - sizeof(thread) - randomizer;
 #pragma GCC diagnostic push
@@ -1342,7 +1342,7 @@ R"(
             return;
         }
         auto rsp = (char*)th->stack._ptr;
-        auto len = align_down(rsp - buf, PAGE_SIZE);
+        auto len = align_down(rsp - buf, STACK_PAGE_SIZE);
         madvise(buf, len, MADV_DONTNEED);
 #endif
     }
